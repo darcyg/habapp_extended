@@ -23,7 +23,7 @@ jobs:
           HABAPP_VERSION=${{ matrix.version }}
 
           DOCKER_IMAGE="deroetzi/habapp_extended"
-          TAGS="latest"
+          TAGS="${DOCKER_IMAGE}:latest"
 
           PLATFORMS="linux/amd64"
 
