@@ -1,0 +1,20 @@
+ThirdPartyNotices
+-----------------
+DerOetzi/habapp_extended uses third-party software or other resources that
+may be distributed under licenses different DerOetzi/habapp_extended software.
+In the event that we overlooked to list a required notice, please bring this
+to our attention by opening an issue on:
+https://github.com/DerOetzi/habapp_extended/issues
+
+Components:
+-----------
+
+Component: HABApp
+Licensor: spacemanspiff2007
+Website: https://github.com/spacemanspiff2007/HABApp
+License: Apache-2.0 License
+
+Component: signal-cli
+Licensor: Sebastian Scheibner
+Website: https://github.com/AsamK/signal-cli
+License: GPL-3.0 License
