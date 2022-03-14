@@ -7,7 +7,7 @@ on:
 
 jobs:
   docker:
-    if: github.repository == 'deroetzi/habapp_extended'
+    if: github.repository == 'DerOetzi/habapp_extended'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
