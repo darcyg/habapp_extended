@@ -40,6 +40,7 @@ ENV HABAPP_HOME=/habapp \
 	SIGNAL_DIR=/opt/signal \
 	USER_ID=9001 \
 	GROUP_ID=${USER_ID} \
+	DBUS_SESSION_BUS_ADDRESS="unix:path=/run/dbus/system_bus_socket" \
 	SIGNAL_NUMBER= 
 
 RUN set -eux; \
@@ -48,16 +49,20 @@ RUN set -eux; \
 	DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
 		openjdk-17-jre \
 		dbus \
+		procps \
 		libcairo2 \
 		libgirepository1.0 \
 		gosu \
 		tini; \
 	ln -s -f $(which gosu) /usr/local/bin/gosu; \
 	apt-get clean; \
-	rm -rf /var/lib/apt/lists/*;
+	rm -rf /var/lib/apt/lists/*; \
+	mkdir -p /run/dbus;
 
 COPY entrypoint.sh /entrypoint.sh
-COPY signal.sh /usr/local/bin/signal
+COPY signal/signal.sh /usr/local/bin/signal
+COPY signal/org.asamk.Signal.conf /etc/dbus-1/system.d/org.asamk.Signal.conf
+COPY signal/org.asamk.Signal.service /usr/share/dbus-1/system-services/org.asamk.Signal.conf
 
 RUN set -eux; \
 # install signal-cli
@@ -72,6 +77,7 @@ RUN set -eux; \
 # prepare directories
 	mkdir -p ${HABAPP_HOME}; \
 	mkdir -p ${HABAPP_HOME}/config; \
+	mkdir -p ${HABAPP_HOME}/signal; \
 # install HABApp
 	pip3 install \
     	--no-index \
@@ -83,7 +89,7 @@ RUN set -eux; \
 	rm -rf /tmp/install
 
 WORKDIR ${HABAPP_HOME}
-VOLUME ["${HABAPP_HOME}/config"]
+VOLUME ["${HABAPP_HOME}/config" , "${HABAPP_HOME}/signal"]
 ENTRYPOINT ["/entrypoint.sh"]
 
-CMD ["gosu", "habapp", "tini", "--", "python", "-m", "HABApp", "--config", "./config"]
+CMD ["tini", "--", "python", "-m", "HABApp", "--config", "./config"]
