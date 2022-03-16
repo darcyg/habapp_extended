@@ -40,4 +40,7 @@ else
   echo "signal-cli daemon already running"
 fi
 
+echo "Wait for signal-cli daemon"
+sleep 20
+
 exec gosu habapp "$@"
