@@ -36,11 +36,12 @@ if ! pgrep -x "signal-cli" > /dev/null
 then   
   echo "signal-cli daemon not running"
   gosu habapp ${SIGNAL_DIR}/bin/signal-cli --config ${HABAPP_HOME}/signal -a ${SIGNAL_NUMBER} daemon --system > ${HABAPP_HOME}/config/log/signal.log 2>&1 &
+
+  echo "Wait for signal-cli daemon"
+  sleep 10
 else
   echo "signal-cli daemon already running"
 fi
 
-echo "Wait for signal-cli daemon"
-sleep 20
 
 exec gosu habapp "$@"
