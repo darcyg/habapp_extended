@@ -1,4 +1,4 @@
-FROM python:3.9-slim as buildimage
+FROM python:3.10-slim as buildimage
 
 ARG HABAPP_VERSION=Develop
 
@@ -32,7 +32,7 @@ RUN set -eux; \
 	pip wheel --wheel-dir=/tmp/install/wheels --use-feature=in-tree-build .; \
 	pip wheel --wheel-dir=/tmp/install/wheels pydbus PyGObject;
 
-FROM python:3.9-slim
+FROM python:3.10-slim
 
 COPY --from=buildimage /tmp/install /tmp/install
 
