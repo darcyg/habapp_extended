@@ -30,7 +30,7 @@ RUN set -eux; \
 	mv HABApp* habapp; \
 	cd habapp; \
 	pip wheel --wheel-dir=/tmp/install/wheels --use-feature=in-tree-build .; \
-	pip wheel --wheel-dir=/tmp/install/wheels pydbus PyGObject;
+	pip wheel --wheel-dir=/tmp/install/wheels pydbus PyGObject requests;
 
 FROM python:3.10-slim
 
@@ -82,7 +82,7 @@ RUN set -eux; \
 	pip3 install \
     	--no-index \
     	--find-links=/tmp/install/wheels \
-		habapp; \
+		habapp requests; \
 # prepare entrypoint script
 	chmod +x /entrypoint.sh; \
 # clean up
